@@ -1,0 +1,14 @@
+{
+  "name": "启课 Classkey · 师生作业与成绩平台",
+  "short_name": "Classkey",
+  "description": "老师派作业、发成绩；学生免注册登录即可完成与查看",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f8fd",
+  "theme_color": "#4E95D9",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "/assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

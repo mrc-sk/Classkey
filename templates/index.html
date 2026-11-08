@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f8fd">
+<title>启课 Classkey · 师生作业与成绩平台</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/static/styles.css">
+<link rel="stylesheet" href="/static/anim.css">
+<link rel="manifest" href="/static/manifest.json">
+</head>
+<body>
+
+<!-- ===== 开场动画：由 1.svg 的原始图形衍生 ===== -->
+<div id="splash" class="splash">
+  <div class="splash-glow"></div>
+  <div class="splash-inner">
+    <div class="splash-halo" aria-hidden="true"></div>
+    <svg class="splash-art" viewBox="360 150 460 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g class="anim-frame">
+        <rect x="399" y="188" width="385" height="385" fill="none" stroke="#4E95D9" stroke-width="2"/>
+      </g>
+      <g class="anim-bar-v">
+        <rect x="457" y="320" width="36" height="214" fill="#96DCF8"/>
+      </g>
+      <g class="anim-bar-h">
+        <rect x="457" y="496" width="101" height="38" fill="#96DCF8"/>
+      </g>
+      <g class="anim-arrow">
+        <path d="M0 106.332 35.0001 0 70.0001 106.332Z" fill="#96DCF8"
+              transform="matrix(-0.945266 0.326301 0.326301 0.945266 488.996 218.638)"/>
+      </g>
+      <g class="anim-green">
+        <path d="M0 0 244.581 0 141.632 35.4234 37.9387 35.4234 37.9387 71.1027 0 84.157Z"
+              fill="#47D45A"
+              transform="matrix(0.756186 -0.654357 -0.654357 -0.756186 557.055 448.587)"/>
+      </g>
+    </svg>
+    <div class="splash-brand">
+      <div class="splash-name"><span style="--n:0">启</span><span style="--n:1">课</span></div>
+      <div class="splash-tag">师生作业与成绩平台</div>
+    </div>
+    <div class="splash-bar"><i></i></div>
+  </div>
+  <button id="skipSplash" class="splash-skip" type="button">跳过动画</button>
+</div>
+
+<!-- ===== 登录 / 注册 ===== -->
+<div id="authView" class="auth-view hidden">
+  <section class="auth-left">
+    <div class="auth-brand">
+      <img src="/assets/favicon.svg" alt="" width="40" height="40">
+      <span>启课</span>
+    </div>
+    <div class="auth-copy">
+      <div class="auth-kicker">CLASSROOM, SIMPLIFIED</div>
+      <h1>把作业和成绩，<br>放进同一个地方。</h1>
+      <p>老师派任务、发成绩；学生用邮箱登录就能完成。<br>不需要注册，不需要手机号。</p>
+      <ul class="auth-points">
+        <li><span class="dot blue"></span> 三种作业模式：在线作答 / 网上提交 / 只留不交</li>
+        <li><span class="dot green"></span> 成绩可直发，也可用代号密码加密解锁</li>
+        <li><span class="dot sky"></span> 老师一键派发学生账号与密码</li>
+      </ul>
+    </div>
+    <svg class="auth-deco" viewBox="360 150 460 460" aria-hidden="true">
+      <g opacity="0.9">
+        <rect x="399" y="188" width="385" height="385" fill="none" stroke="#4E95D9" stroke-width="2"/>
+        <rect x="457" y="320" width="36" height="214" fill="#96DCF8"/>
+        <rect x="457" y="496" width="101" height="38" fill="#96DCF8"/>
+        <path d="M0 106.332 35.0001 0 70.0001 106.332Z" fill="#96DCF8"
+              transform="matrix(-0.945266 0.326301 0.326301 0.945266 488.996 218.638)"/>
+        <path d="M0 0 244.581 0 141.632 35.4234 37.9387 35.4234 37.9387 71.1027 0 84.157Z"
+              fill="#47D45A"
+              transform="matrix(0.756186 -0.654357 -0.654357 -0.756186 557.055 448.587)"/>
+      </g>
+    </svg>
+  </section>
+  <section class="auth-right">
+    <div class="auth-card" id="authCard"></div>
+    <div class="auth-foot">启课 · 本地部署，数据只保存在你自己的电脑上</div>
+  </section>
+</div>
+
+<!-- ===== 应用主体 ===== -->
+<div id="appView" class="app-shell hidden">
+  <aside class="sidebar">
+    <div class="side-brand">
+      <img src="/assets/favicon.svg" alt="" width="36" height="36">
+      <div><strong>启课</strong><small>作业与成绩平台</small></div>
+    </div>
+    <div class="side-class" id="sideClass"></div>
+    <nav class="side-nav" id="sideNav"></nav>
+    <div class="side-foot">
+      <div class="side-tip">数据保存在本机 SQLite 数据库<br>无需联网、无需第三方账号</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="top-title">
+        <div class="crumb" id="crumb">工作台</div>
+        <h2 id="pageTitle">概览</h2>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn bell-btn" data-act="gotoNotices" title="消息通知" type="button"></button>
+        <button class="icon-btn" data-act="refresh" title="刷新" type="button"></button>
+        <div class="user-chip" id="userChip"></div>
+        <button class="btn ghost sm" data-act="logout" type="button">退出登录</button>
+      </div>
+    </header>
+    <main id="pageContent" class="page"></main>
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav"></nav>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modalRoot"></div>
+
+<script src="/static/app.js"></script>
+<script src="/static/ext-batch.js"></script>
+<script src="/static/ext-classes.js"></script>
+<script src="/static/ext-quiz.js"></script>
+<script src="/static/ext-scores.js"></script>
+<script src="/static/ext-notify.js"></script>
+<script src="/static/ext-ops.js"></script>
+<script src="/static/ext-submit.js"></script>
+<script src="/static/ext-polish.js"></script>
+</body>
+</html>
